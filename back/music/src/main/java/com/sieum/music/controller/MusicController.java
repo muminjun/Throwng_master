@@ -4,9 +4,7 @@ import com.sieum.music.service.MusicService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,7 +14,16 @@ public class MusicController {
 
     @Operation(summary = "show detail of a thrown music")
     @GetMapping("/thrown/{throwId}")
-    public ResponseEntity<?> getDetailOfThrownMusic(@PathVariable("throwId") long throwId) {
+    public ResponseEntity<?> getDetailOfThrownMusic(@PathVariable long throwId) {
         return ResponseEntity.ok().body(musicService.getDetailOfThrownMusic(throwId));
+    }
+
+    @Operation(summary = "pick up a song")
+    @PostMapping("/pick/{throwId}")
+    public ResponseEntity<?> create(/*@RequestHeader("Authorization") String authorization, */@PathVariable long throwId) {
+//        int userId = musicService.getCurrentUserId(authorization);
+        int userId=1;
+        musicService.createPickup(userId, throwId);
+        return ResponseEntity.noContent().build();
     }
 }
