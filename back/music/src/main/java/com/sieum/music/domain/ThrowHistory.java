@@ -22,7 +22,7 @@ public class ThrowHistory extends BaseTime {
     @NotNull private Integer userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "throw_id")
+    @JoinColumn(name = "throw_item_id")
     @NotNull
-    private Throw throwItem;
+    private ThrowItem throwItem;
 }

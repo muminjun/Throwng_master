@@ -1,6 +1,6 @@
 package com.sieum.music.dto.response;
 
-import com.sieum.music.domain.Throw;
+import com.sieum.music.domain.ThrowItem;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -35,7 +35,7 @@ public class ThrownMusicDetailResponse {
     @Schema(description = "thrown date")
     private LocalDateTime thrownDate;
 
-    public static ThrownMusicDetailResponse of(final Throw thrown) {
+    public static ThrownMusicDetailResponse of(final ThrowItem thrown) {
         return ThrownMusicDetailResponse.builder()
                 .throwId(thrown.getId())
                 .title(thrown.getSong().getTitle())
