@@ -2,6 +2,8 @@ package com.sieum.music.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import com.sieum.music.domain.enums.ThrowStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,11 +15,11 @@ import org.locationtech.jts.geom.Point;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Throw extends BaseTime {
+public class ThrowItem extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "throw_id")
+    @Column(name = "throw_item_id")
     private Long id;
 
     @Column(length = 50)
