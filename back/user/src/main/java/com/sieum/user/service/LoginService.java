@@ -70,4 +70,10 @@ public class LoginService {
         }
         throw new AuthException(FAIL_TO_GENERATE_RANDOM_NICKNAME);
     }
+
+    public long getUsername(String accessToken) {
+        String userId = jwtProvider.getUserId(accessToken);
+        return userRepository.findBySocialId(userId).get().getId();
+    }
+
 }
