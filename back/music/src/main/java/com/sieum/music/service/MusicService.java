@@ -10,26 +10,26 @@ import com.sieum.music.repository.MusicRepository;
 import com.sieum.music.repository.PlaylistHistoryRepository;
 import com.sieum.music.repository.PlaylistRepository;
 import com.sieum.music.repository.ThrowHistoryRepository;
+import com.sieum.music.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
 public class MusicService {
 
     private final TokenAuthClient tokenAuthClient;
+    private final RedisUtil redisUtil;
     private final MusicRepository musicRepository;
     private final ThrowHistoryRepository throwHistoryRepository;
     private final PlaylistRepository playlistRepository;
     private final PlaylistHistoryRepository playlistHistoryRepository;
 
     public int getCurrentUserId(String authorization) {
-        return 1;
-//        return tokenAuthClient.getUserId(authorization);
+        return tokenAuthClient.getUserId(authorization);
     }
 
     public ThrownMusicDetailResponse getDetailOfThrownMusic(final long throwId) {
@@ -47,16 +47,27 @@ public class MusicService {
                         .findById(throwId)
                         .orElseThrow(() -> new BadRequestException(NOT_FOUND_THROW_ITEM_ID));
         createThrowHistory(userId, throwItem);
-//        Playlist playlist=createPlaylist(userId,throwItem.getSong());
-//        createPlaylistHistory(playlist);
-        findPlaylist(userId,throwItem.getSong(), true).orElseGet(
+        findPlaylist(userId,throwItem.getSong(),true).orElseGet(
                 ()->{
                     createPlaylistHistory(createPlaylist(userId,throwItem.getSong()));
+                    return null;
                 }
         );
     }
 
     private void createThrowHistory(final int userId, final ThrowItem throwItem) {
+        String key="user_"+userId+"_pickup_count";
+        Object value=redisUtil.getData(key);
+        int pickupCount=0;
+
+        if(value!=null) {
+            redisUtil.deleteData(key);
+            pickupCount=Integer.valueOf((String) value);
+        }
+
+        pickupCount++;
+        redisUtil.setData(key, String.valueOf(pickupCount));
+
         throwHistoryRepository.save(
                 ThrowHistory.builder()
                         .userId(userId)
@@ -66,14 +77,12 @@ public class MusicService {
     }
 
     private Playlist createPlaylist(final int userId, final Song song) {
-
         return playlistRepository.save(
                 Playlist.builder()
                         .userId(userId)
                         .song(song)
                         .status(true)
                         .build());
-
     }
 
     private void createPlaylistHistory(Playlist playlist) {
@@ -86,7 +95,7 @@ public class MusicService {
     }
 
     private Optional<Playlist> findPlaylist(final int userId, final Song song, final boolean status) {
-        playlistRepository.findByUserIdAndSongIdAndStatus(userId,song.getId(),status);
+        return playlistRepository.findByUserIdAndSongIdAndStatus(userId,song.getId(),status);
     }
 
 }

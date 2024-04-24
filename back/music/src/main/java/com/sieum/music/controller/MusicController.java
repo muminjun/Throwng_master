@@ -20,9 +20,8 @@ public class MusicController {
 
     @Operation(summary = "pick up a song")
     @PostMapping("/pick/{throwId}")
-    public ResponseEntity<?> create(/*@RequestHeader("Authorization") String authorization, */@PathVariable long throwId) {
-//        int userId = musicService.getCurrentUserId(authorization);
-        int userId=1;
+    public ResponseEntity<?> createPickup(@RequestHeader("Authorization") String authorization, @PathVariable long throwId) {
+        int userId = musicService.getCurrentUserId(authorization);
         musicService.createPickup(userId, throwId);
         return ResponseEntity.noContent().build();
     }

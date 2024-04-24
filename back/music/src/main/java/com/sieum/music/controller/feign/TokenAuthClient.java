@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @FeignClient(name="USER")
 public interface TokenAuthClient {
 
-//    @GetMapping("/users/auth/id")
-//    int getUserId(@RequestHeader("Authorization") String accessToken);
+    @GetMapping("/users/auth/id")
+    int getUserId(@RequestHeader("Authorization") String accessToken);
 }
