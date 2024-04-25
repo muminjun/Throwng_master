@@ -1,4 +1,4 @@
-package com.sieum.music.domain;
+package com.sieum.user.domain.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
@@ -6,10 +6,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ThrowStatus {
-    VISIBLE("VISIBLE", "정상"),
-    HIDDEN("HIDDEN", "삭제"),
-    COMPLAINT("COMPLAINT", "신고");
+public enum Violation {
+    NONE("NONE", "해당없음"),
+    TEMPORARY("TEMPORARY", "7일 정지"),
+    PERMANENT("PERMANENT", "영구정지");
 
     private String value;
 
