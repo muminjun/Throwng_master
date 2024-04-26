@@ -57,6 +57,11 @@ public class MusicService {
                 musicRepository
                         .findById(throwId)
                         .orElseThrow(() -> new BadRequestException(NOT_FOUND_THROW_ITEM_ID));
+
+        if (throwHistoryRepository.existsByUserIdAndThrowItemId(userId, throwId)) {
+            throw new BadRequestException(DUPLICATE_PICKUP_REQUEST);
+        }
+
         createThrowHistory(userId, throwItem);
         findPlaylist(userId, throwItem.getSong(), true)
                 .orElseGet(
@@ -132,5 +137,13 @@ public class MusicService {
         playlist.changePlaylistStatus(false);
         playlistRepository.save(playlist);
         createPlaylistHistory(playlist, false);
+    }
+
+    public Long countThrowngSong(final long userId) {
+        return musicRepository.countByUserId(userId);
+    }
+
+    public Long countPickUpSong(final long userId) {
+        return throwHistoryRepository.countByUserId(userId);
     }
 }
