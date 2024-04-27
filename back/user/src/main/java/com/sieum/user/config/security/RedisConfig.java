@@ -1,6 +1,5 @@
 package com.sieum.user.config.security;
 
-import io.lettuce.core.ReadFrom;
 import java.time.Duration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -9,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisStaticMasterReplicaConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
@@ -30,11 +27,12 @@ public class RedisConfig {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        LettuceClientConfiguration clientConfig =
-                LettuceClientConfiguration.builder().readFrom(ReadFrom.REPLICA_PREFERRED).build();
-        RedisStaticMasterReplicaConfiguration slaveConfig =
-                new RedisStaticMasterReplicaConfiguration(redisHost, redisPort);
-        return new LettuceConnectionFactory(slaveConfig, clientConfig);
+        //        LettuceClientConfiguration clientConfig =
+        //
+        // LettuceClientConfiguration.builder().readFrom(ReadFrom.REPLICA_PREFERRED).build();
+        //        RedisStaticMasterReplicaConfiguration slaveConfig =
+        //                new RedisStaticMasterReplicaConfiguration(redisHost, redisPort);
+        return new LettuceConnectionFactory(redisHost, redisPort);
     }
 
     @Bean
