@@ -4,7 +4,7 @@ import { MyLevel } from "../../types/myPage";
 
 const api = axiosApi()
 
-const getMyDropHistory = async():Promise<MyThrowHistory[]> => {
+const getMyDropHistory = async() => {
   try {
     const res = await api.get<MyThrowHistory[]>(`/users/user/thrown-music`)
     console.log(res.data)
@@ -15,7 +15,7 @@ const getMyDropHistory = async():Promise<MyThrowHistory[]> => {
   }
 }
 
-const getMyPickHistory = async():Promise<MyPickHistory[]> => {
+const getMyPickHistory = async() => {
   try {
     const res = await api.get<MyPickHistory[]>(`/users/user/picked-music`)
     console.log(res.data)
@@ -26,7 +26,7 @@ const getMyPickHistory = async():Promise<MyPickHistory[]> => {
   }
 }
 
-const getMyLevel = async():Promise<MyLevel> => {
+const getMyLevel = async() => {
   try {
     const res = await api.get<MyLevel>(`/users/user/profile`)
     console.log(res.data)

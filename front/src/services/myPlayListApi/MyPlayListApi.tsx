@@ -3,7 +3,7 @@ import { ResponseData } from "../../types/songType";
 
 const api = axiosApi()
 
-const getMyPlayList = async (lastModifiedAt: string|null):Promise<ResponseData> => {
+const getMyPlayList = async (lastModifiedAt: string|null) => {
   try {
     const res = await api.get<ResponseData>(`/playlists?time=${lastModifiedAt}`)
     console.log(res.data)

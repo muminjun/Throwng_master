@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { addressState, locationState } from "@store/map/atoms";
 import "@styles/musicDrop/MusicDrop.scss";
-import { Song } from "../../types/songType";
+import { DropSong, Song } from "../../types/songType";
 import { postThrowngMusic } from "@services/musicSearchApi/MusicSearchApi";
 import { musicDropImage } from "@store/musicSearch/atoms";
 
@@ -28,7 +28,7 @@ const MusicDropBody = ({ songInfo }: Props) => {
   };
 
   const postThrownSong = () => {
-    const requestBody = {
+    const requestBody:DropSong = {
       longitude: myLocation.lng,
       latitude: myLocation.lat,
       location: myAddress,
@@ -50,7 +50,6 @@ const MusicDropBody = ({ songInfo }: Props) => {
           </p>
           음악을 두고 갈까요?
         </div>
-
         <div className="input-div">
           <textarea
             onChange={textOnChange}

@@ -1,9 +1,9 @@
 import { axiosApi } from "@/utils/common";
-import { Song } from "../../types/songType"
+import { DropSong, Song } from "../../types/songType"
 
 const api = axiosApi()
 
-const getSearchMusic = async(data:string):Promise<Song[]>=> {
+const getSearchMusic = async(data:string)=> {
   try {
     const res = await api.get<Song[]>(`/music/search/${data}`)
     return res.data
@@ -13,9 +13,9 @@ const getSearchMusic = async(data:string):Promise<Song[]>=> {
   }
 }
 
-const postThrowngMusic = async(youtubeId:string, data: { longitude: number; latitude: number; location: string; imageUrl: string; comment: string; title: string; artist: string; albumImageUrl: string; }):Promise<Song[]>=> {
+const postThrowngMusic = async(youtubeId:string, data:DropSong)=> {
   try {
-    const res = await api.post<Song[]>(`/music/thrown/${youtubeId}`, data);
+    const res = await api.post(`/music/thrown/${youtubeId}`, data);
     return res.data;
   } catch (e) {
     console.log(e);
