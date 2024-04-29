@@ -88,6 +88,12 @@ public class MusicController {
         return ResponseEntity.ok(musicService.countPickUpSong(userId));
     }
 
+    @GetMapping("/throw-items")
+    @Operation(summary = "Look up music that has no record of picking up")
+    public ResponseEntity<?> getThrowItems() {
+        return ResponseEntity.ok(musicService.getThrowItems());
+    }
+
     @Operation(summary = "Throw song")
     @PostMapping("/thrown-song/{youtubeId}")
     public ResponseEntity<?> thrownSong(
@@ -104,5 +110,11 @@ public class MusicController {
     @GetMapping("/thrown-music/{userId}")
     public ResponseEntity<?> getThrownSong(@PathVariable("userId") long userId) {
         return ResponseEntity.ok().body(musicService.getThrownSong(userId));
+    }
+
+    @Operation(summary = "Feign Client - Check User picked-music list ")
+    @GetMapping("/picked-music/{userId}")
+    public ResponseEntity<?> getPickedUpSong(@PathVariable("userId") long userId) {
+        return ResponseEntity.ok().body(musicService.getPickedUpSong(userId));
     }
 }
