@@ -175,7 +175,6 @@ public class MusicService {
             final UserLevelInfoResponse userLevelInfoResponse,
             final String youtubeId,
             final MultipartFile imageUrl,
-            final MultipartFile albumImageUrl,
             final ThrownItemRequest thrownItemRequest)
             throws IOException {
         final long userId = userLevelInfoResponse.getUserId();
