@@ -175,7 +175,6 @@ public class MusicService {
             final UserLevelInfoResponse userLevelInfoResponse,
             final String youtubeId,
             final MultipartFile imageUrl,
-            final MultipartFile albumImageUrl,
             final ThrownItemRequest thrownItemRequest)
             throws IOException {
         final long userId = userLevelInfoResponse.getUserId();
@@ -226,7 +225,7 @@ public class MusicService {
                     Song.builder()
                             .youtubeId(youtubeId)
                             .title(thrownItemRequest.getTitle())
-                            .albumImage(s3FileUploadService.uploadFile(albumImageUrl))
+                            .albumImage(thrownItemRequest.getAlbumImageUrl())
                             .artist(artist)
                             .build());
         }
