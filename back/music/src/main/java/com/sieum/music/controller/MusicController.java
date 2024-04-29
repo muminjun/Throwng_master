@@ -7,6 +7,7 @@ import com.sieum.music.dto.response.UserLevelInfoResponse;
 import com.sieum.music.service.MusicService;
 import com.sieum.music.util.YoutubeMusicUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.validation.Valid;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -99,10 +101,14 @@ public class MusicController {
     public ResponseEntity<?> thrownSong(
             @RequestHeader("Authorization") final String authorization,
             @PathVariable("youtubeId") final String youtubeId,
-            @RequestBody ThrownItemRequest thrownItemRequest) {
+            @RequestPart(required = false) final MultipartFile imageUrl,
+            @RequestPart final MultipartFile albumImageUrl,
+            @RequestPart ThrownItemRequest thrownItemRequest)
+            throws IOException {
         //        final long userId = musicService.getLimitAccount(authorization);
         UserLevelInfoResponse userLevelInfoResponse = musicService.getLimitAccount(authorization);
-        musicService.thrownSong(userLevelInfoResponse, youtubeId, thrownItemRequest);
+        musicService.thrownSong(
+                userLevelInfoResponse, youtubeId, imageUrl, albumImageUrl, thrownItemRequest);
         return ResponseEntity.noContent().build();
     }
 
