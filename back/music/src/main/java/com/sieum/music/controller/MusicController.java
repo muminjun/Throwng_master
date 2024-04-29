@@ -2,14 +2,13 @@ package com.sieum.music.controller;
 
 import com.sieum.music.dto.request.NearItemPointRequest;
 import com.sieum.music.dto.request.ThrownItemRequest;
-import com.sieum.music.dto.response.SearchSongResponse;
 import com.sieum.music.dto.response.UserLevelInfoResponse;
 import com.sieum.music.service.MusicService;
+import com.sieum.music.util.SpotifyUtil;
 import com.sieum.music.util.YoutubeMusicUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,6 +22,7 @@ public class MusicController {
 
     private final MusicService musicService;
     private final YoutubeMusicUtil youtubeMusicUtil;
+    private final SpotifyUtil spotifyUtil;
 
     @Operation(summary = "Show detail of a thrown music")
     @GetMapping("/thrown/{throwId}")
@@ -54,11 +54,18 @@ public class MusicController {
         return ResponseEntity.ok().body(musicService.getPlaylist(userId, modifiedAt));
     }
 
-    @Operation(summary = "Search for songs on YouTube")
+    //    @Operation(summary = "Search for songs on YouTube")
+    //    @GetMapping("/search/{keyword}")
+    //    public ResponseEntity<?> searchSong(@PathVariable("keyword") String keyword) {
+    //        List<SearchSongResponse> searchSongResponse =
+    // youtubeMusicUtil.searchSongInYoutube(keyword);
+    //        return ResponseEntity.ok().body(searchSongResponse);
+    //    }
+
+    @Operation(summary = "Search for songs on Spotify")
     @GetMapping("/search/{keyword}")
-    public ResponseEntity<?> searchSong(@PathVariable("keyword") String keyword) {
-        List<SearchSongResponse> searchSongResponse = youtubeMusicUtil.searchSongInYoutube(keyword);
-        return ResponseEntity.ok().body(searchSongResponse);
+    public ResponseEntity<?> searchSong2(@PathVariable("keyword") final String keyword) {
+        return ResponseEntity.ok().body(spotifyUtil.searchSongInSpotify(keyword));
     }
 
     @Operation(summary = "Search for list of dropped music within 600 radius")
@@ -68,7 +75,7 @@ public class MusicController {
         return ResponseEntity.ok().body(musicService.findNearItemsPoints(nearItemPointRequest));
     }
 
-    @Operation(summary = "Eelete playlist")
+    @Operation(summary = "Delete playlist")
     @DeleteMapping("/playlists/{playlistId}")
     public ResponseEntity<?> deletePlaylist(
             @RequestHeader("Authorization") final String authorization,
