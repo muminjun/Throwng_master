@@ -108,7 +108,7 @@ public class MusicController {
     public ResponseEntity<?> thrownSong(
             @RequestHeader("Authorization") final String authorization,
             @PathVariable("youtubeId") final String youtubeId,
-            @RequestPart(required = false) final MultipartFile imageUrl,
+            @RequestPart final MultipartFile imageUrl,
             @RequestPart ThrownItemRequest thrownItemRequest)
             throws IOException {
         //        final long userId = musicService.getLimitAccount(authorization);
