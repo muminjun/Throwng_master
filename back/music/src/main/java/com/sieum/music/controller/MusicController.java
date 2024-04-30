@@ -108,12 +108,17 @@ public class MusicController {
     public ResponseEntity<?> thrownSong(
             @RequestHeader("Authorization") final String authorization,
             @PathVariable("youtubeId") final String youtubeId,
-            @RequestPart final MultipartFile imageUrl,
+            @RequestPart(required = false) final MultipartFile imageUrl,
             @RequestPart ThrownItemRequest thrownItemRequest)
             throws IOException {
         //        final long userId = musicService.getLimitAccount(authorization);
         UserLevelInfoResponse userLevelInfoResponse = musicService.getLimitAccount(authorization);
-        musicService.thrownSong(userLevelInfoResponse, youtubeId, imageUrl, thrownItemRequest);
+        if (imageUrl == null) {
+            musicService.thrownSong(userLevelInfoResponse, youtubeId, thrownItemRequest);
+        } else {
+            musicService.thrownSong2(userLevelInfoResponse, youtubeId, imageUrl, thrownItemRequest);
+        }
+
         return ResponseEntity.noContent().build();
     }
 
