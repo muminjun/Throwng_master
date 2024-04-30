@@ -2,6 +2,7 @@ package com.sieum.music.controller;
 
 import com.sieum.music.dto.request.NearItemPointRequest;
 import com.sieum.music.dto.request.ThrownItemRequest;
+import com.sieum.music.dto.response.SearchSongResponse;
 import com.sieum.music.dto.response.UserLevelInfoResponse;
 import com.sieum.music.service.MusicService;
 import com.sieum.music.util.SpotifyUtil;
@@ -9,6 +10,7 @@ import com.sieum.music.util.YoutubeMusicUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
