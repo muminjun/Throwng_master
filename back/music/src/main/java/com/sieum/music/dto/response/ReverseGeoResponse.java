@@ -11,12 +11,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReverseGeoResponse {
 
-    String region3Depth;
+    String regionName; // gu and dong
 
     public static ReverseGeoResponse of(
             final KakaoMapReverseGeoResponse kakaoMapReverseGeoResponse) {
         return builder()
-                .region3Depth(kakaoMapReverseGeoResponse.getDocuments().get(0).region_3depth_name)
+                .regionName(
+                        kakaoMapReverseGeoResponse.getDocuments().get(1).region_2depth_name
+                                + " "
+                                + kakaoMapReverseGeoResponse
+                                        .getDocuments()
+                                        .get(1)
+                                        .region_3depth_name)
                 .build();
     }
 }
