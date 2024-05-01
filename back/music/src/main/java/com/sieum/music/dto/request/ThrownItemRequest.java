@@ -35,6 +35,9 @@ public class ThrownItemRequest {
     @Schema(description = "comment")
     private String comment;
 
+    @Schema(description = "imageUrl")
+    private String imageUrl;
+
     @Schema(description = "title")
     private String title;
 
