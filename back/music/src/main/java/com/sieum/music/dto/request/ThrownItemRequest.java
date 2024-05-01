@@ -40,4 +40,7 @@ public class ThrownItemRequest {
 
     @Schema(description = "artist")
     private String artist;
+
+    @Schema(description = "albumImage")
+    private String albumImageUrl;
 }

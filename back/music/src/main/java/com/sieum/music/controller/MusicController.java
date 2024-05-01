@@ -109,13 +109,15 @@ public class MusicController {
             @RequestHeader("Authorization") final String authorization,
             @PathVariable("youtubeId") final String youtubeId,
             @RequestPart(required = false) final MultipartFile imageUrl,
-            @RequestPart final MultipartFile albumImageUrl,
             @RequestPart ThrownItemRequest thrownItemRequest)
             throws IOException {
         //        final long userId = musicService.getLimitAccount(authorization);
         UserLevelInfoResponse userLevelInfoResponse = musicService.getLimitAccount(authorization);
-        musicService.thrownSong(
-                userLevelInfoResponse, youtubeId, imageUrl, albumImageUrl, thrownItemRequest);
+        if (imageUrl == null) {
+            musicService.thrownSong(userLevelInfoResponse, youtubeId, thrownItemRequest);
+        } else {
+            musicService.thrownSong2(userLevelInfoResponse, youtubeId, imageUrl, thrownItemRequest);
+        }
         return ResponseEntity.noContent().build();
     }
 

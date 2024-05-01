@@ -174,8 +174,7 @@ public class MusicService {
     public void thrownSong(
             final UserLevelInfoResponse userLevelInfoResponse,
             final String youtubeId,
-            final MultipartFile imageUrl,
-            final MultipartFile albumImageUrl,
+            //            final MultipartFile imageUrl,
             final ThrownItemRequest thrownItemRequest)
             throws IOException {
         final long userId = userLevelInfoResponse.getUserId();
@@ -226,7 +225,113 @@ public class MusicService {
                     Song.builder()
                             .youtubeId(youtubeId)
                             .title(thrownItemRequest.getTitle())
-                            .albumImage(s3FileUploadService.uploadFile(albumImageUrl))
+                            .albumImage(thrownItemRequest.getAlbumImageUrl())
+                            .artist(artist)
+                            .build());
+        }
+
+        Song song =
+                songRepository
+                        .findByYoutubeId(youtubeId)
+                        .orElseThrow(() -> new BadRequestException(NOT_FOUND_YOUTUBE_ID));
+
+        musicRepository.save(
+                ThrowItem.builder()
+                        .content(thrownItemRequest.getComment())
+                        .status(ThrowStatus.valueOf("VISIBLE"))
+                        .locationPoint(point)
+                        .userId(userId)
+                        .zipcode(zipcode)
+                        .song(songRepository.findByTitle(thrownItemRequest.getTitle()))
+                        .build());
+
+        //        if (!imageUrl.isEmpty()) {
+        //            musicRepository.save(
+        //                    ThrowItem.builder()
+        //                            .content(thrownItemRequest.getComment())
+        //                            .itemImage(s3FileUploadService.uploadFile(imageUrl))
+        //                            .status(ThrowStatus.valueOf("VISIBLE"))
+        //                            .locationPoint(point)
+        //                            .userId(userId)
+        //                            .zipcode(zipcode)
+        //
+        // .song(songRepository.findByTitle(thrownItemRequest.getTitle()))
+        //                            .build());
+        //
+        //        } else {
+        //            musicRepository.save(
+        //                    ThrowItem.builder()
+        //                            .content(thrownItemRequest.getComment())
+        //                            .status(ThrowStatus.valueOf("VISIBLE"))
+        //                            .locationPoint(point)
+        //                            .userId(userId)
+        //                            .zipcode(zipcode)
+        //
+        // .song(songRepository.findByTitle(thrownItemRequest.getTitle()))
+        //                            .build());
+        //        }
+
+        thrownCount--;
+
+        redisUtil.setData(key, String.valueOf(thrownCount));
+    }
+
+    @Transactional
+    public void thrownSong2(
+            final UserLevelInfoResponse userLevelInfoResponse,
+            final String youtubeId,
+            final MultipartFile imageUrl,
+            final ThrownItemRequest thrownItemRequest)
+            throws IOException {
+        final long userId = userLevelInfoResponse.getUserId();
+
+        final String key = "user_throw_" + userId + "_" + localDateUtil.GetDate(LocalDate.now());
+        final Object value = redisUtil.getData(key);
+
+        int thrownCount = 0;
+
+        if (value == null) {
+            thrownCount = userLevelInfoResponse.getLevelCount();
+        } else {
+            if (Integer.valueOf((String) value) == 0) {
+                throw new BadRequestException(NOT_THROW_SONG);
+            } else {
+                thrownCount = Integer.valueOf((String) value);
+            }
+        }
+
+        final Point point =
+                GeomUtil.createPoint(
+                        thrownItemRequest.getLongitude(), thrownItemRequest.getLatitude());
+
+        List<PoiResponse> poiResponses =
+                throwQueryDSLRepository.findNearItemsPointsByDistance(point, 1000.0, 100.0).stream()
+                        .filter(item -> item.getStatus().equals(ThrowStatus.valueOf("VISIBLE")))
+                        .map(PoiResponse::fromItemPoint)
+                        .collect(Collectors.toList());
+        if (poiResponses.size() > 0) {
+            throw new BadRequestException(NOT_THROW_ITEM_IN_LIMITED_RADIUS);
+        }
+
+        String[] zipArray = thrownItemRequest.getLocation().split("\\s");
+        Zipcode zipcode =
+                zipCodeRepository
+                        .findBySigunguAndDong(zipArray[0], zipArray[1])
+                        .orElseThrow(() -> new BadRequestException(NOT_FOUND_ZIP_CODE));
+
+        boolean isSong = songRepository.existsByYoutubeId(youtubeId);
+        if (!isSong) {
+            boolean isArtist = artistRepository.existsByName(thrownItemRequest.getArtist());
+            if (!isArtist) {
+                artistRepository.save(Artist.builder().name(thrownItemRequest.getArtist()).build());
+            }
+            Artist artist = artistRepository.findByName(thrownItemRequest.getArtist());
+
+            songRepository.save(
+                    Song.builder()
+                            .youtubeId(youtubeId)
+                            .title(thrownItemRequest.getTitle())
+                            .albumImage(thrownItemRequest.getAlbumImageUrl())
                             .artist(artist)
                             .build());
         }
