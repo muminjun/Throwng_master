@@ -7,6 +7,7 @@ import com.sieum.music.domain.*;
 import com.sieum.music.domain.ThrowItem;
 import com.sieum.music.domain.enums.ThrowStatus;
 import com.sieum.music.dto.request.NearItemPointRequest;
+import com.sieum.music.dto.request.ReverseGeoCodeRequest;
 import com.sieum.music.dto.request.ThrownItemRequest;
 import com.sieum.music.dto.response.*;
 import com.sieum.music.dto.response.PlaylistItemResponse;
@@ -16,6 +17,7 @@ import com.sieum.music.dto.response.ThrownMusicDetailResponse;
 import com.sieum.music.exception.BadRequestException;
 import com.sieum.music.repository.*;
 import com.sieum.music.util.GeomUtil;
+import com.sieum.music.util.KakaoMapReverseGeoUtil;
 import com.sieum.music.util.LocalDateUtil;
 import com.sieum.music.util.RedisUtil;
 import java.io.IOException;
@@ -50,6 +52,7 @@ public class MusicService {
     private final ZipCodeRepository zipCodeRepository;
     private final ArtistRepository artistRepository;
     private final S3FileUploadService s3FileUploadService;
+    private final KakaoMapReverseGeoUtil kakaoMapReverseGeoUtil;
 
     public long getCurrentUserId(String authorization) {
         return tokenAuthClient.getUserId(authorization);
@@ -388,5 +391,12 @@ public class MusicService {
                         .collect(Collectors.toList());
 
         return pickedUpSongResponse;
+    }
+
+    public ReverseGeoResponse getReverseGeo(final ReverseGeoCodeRequest reverseGeoCodeRequest) {
+        KakaoMapReverseGeoResponse kakaoMapReverseGeoResponse =
+                kakaoMapReverseGeoUtil.getReverseGeo(
+                        reverseGeoCodeRequest.getLatitude(), reverseGeoCodeRequest.getLongitude());
+        return ReverseGeoResponse.of(kakaoMapReverseGeoResponse);
     }
 }
