@@ -1,6 +1,7 @@
 package com.sieum.music.controller;
 
 import com.sieum.music.dto.request.NearItemPointRequest;
+import com.sieum.music.dto.request.ReverseGeoCodeRequest;
 import com.sieum.music.dto.request.ThrownItemRequest;
 import com.sieum.music.dto.response.UserLevelInfoResponse;
 import com.sieum.music.service.MusicService;
@@ -131,5 +132,11 @@ public class MusicController {
     @GetMapping("/picked-music/{userId}")
     public ResponseEntity<?> getPickedUpSong(@PathVariable("userId") long userId) {
         return ResponseEntity.ok().body(musicService.getPickedUpSong(userId));
+    }
+
+    @PostMapping("/reverse-geocode")
+    public ResponseEntity<?> reverseGeoCode(
+            @Valid @RequestBody ReverseGeoCodeRequest reverseGeoCodeRequest) {
+        return ResponseEntity.ok().body(musicService.getReverseGeo(reverseGeoCodeRequest));
     }
 }
