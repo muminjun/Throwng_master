@@ -13,3 +13,9 @@ spring:
           password: FY3Rpc4DWc5qQRfhESCP
           search-paths: /..
           default-label: master
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
