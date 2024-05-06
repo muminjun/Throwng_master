@@ -1,3 +1,4 @@
+import ContentPage from "@pages/ContentPage";
 import QuizCountDown from "@pages/quiz/QuizCountDown";
 import QuizCouponPage from "@pages/quiz/QuizCouponPage";
 import QuizFailPage from "@pages/quiz/QuizFailPage";
@@ -79,6 +80,10 @@ export default {
           ],
         },
       ],
+    },
+    {
+      path: "content",
+      element: <ContentPage />
     },
     {
       path: "quiz",

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { FaRegUser, FaRegBell } from "react-icons/fa";
-import { LuHome } from "react-icons/lu";
+import { FaRegUser } from "react-icons/fa";
+import { LuHome, LuGamepad2 } from "react-icons/lu";
 import { FaRegCirclePlay } from "react-icons/fa6";
 // import { BsMusicPlayer } from "react-icons/bs";
 import circle from "@assets/images/Cone.webp";
@@ -26,9 +26,9 @@ const Navbar = () => {
             <img className="logo" src={logo} alt="" />
           </NavLink>
         </div>
-        <NavLink to={"/user/notification"} className="menu__item">
-          <FaRegBell />
-          <div>알림</div>
+        <NavLink to={"/content"} className="menu__item">
+          <LuGamepad2 />
+          <div>컨텐츠</div>
         </NavLink>
         <NavLink to={"/user/mypage"} className="menu__item">
           <FaRegUser />

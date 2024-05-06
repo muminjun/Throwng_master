@@ -1,0 +1,28 @@
+.content-item {
+  padding: 2dvh;
+  height: 90dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  .quiz-border {
+    border: 1px solid blue;
+    border-radius: 2dvh;
+    width: 75%;
+    height: 20dvh;
+  }
+
+  .game1-border {
+    border: 1px solid blue;
+    border-radius: 2dvh;
+    width: 75%;
+    height: 20dvh;
+  }
+
+  .game2-border {
+    border: 1px solid blue;
+    border-radius: 2dvh;
+    width: 75%;
+    height: 20dvh;
+  }
+}
