@@ -7,7 +7,7 @@ const ContentPage = () => {
       <Header centerText="컨텐츠" />
       <div className="content-item">
         <div className="quiz-border">
-          <p>퀴즈</p>
+          <p>쓰롱-퀴즈</p>
         </div>
         <div className="game1-border">
           <p>게임 1</p>
