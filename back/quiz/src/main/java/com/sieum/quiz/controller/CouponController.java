@@ -33,7 +33,7 @@ public class CouponController {
 
     @Operation(summary = "feign client")
     @GetMapping("/validation")
-    public ResponseEntity<?> getCouponHistory(
+    public ResponseEntity<?> validateCoupon(
             @RequestBody final CouponValidationRequest couponValidationRequest) {
         couponValidator.validateCoupon(couponValidationRequest);
         return ResponseEntity.noContent().build();
