@@ -1,0 +1,19 @@
+/* styles/Transition.scss */
+.slide-enter {
+  opacity: 1;
+}
+
+.slide-enter-active {
+  opacity: 1;
+}
+
+.slide-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-exit-active {
+  opacity: 0;
+  transform: translateY(-100%); // 아래에서 위로 이동
+  transition: all 500ms ease-out;
+}

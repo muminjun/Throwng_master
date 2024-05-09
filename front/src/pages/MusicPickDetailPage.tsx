@@ -8,6 +8,7 @@ import { getMusicDetails } from "@services/musicPickApi";
 import { MusicInfo } from "../types/mapType";
 import "@styles/music/pick/MusicPickDetailPage.scss";
 import Loading from "@components/Loading";
+import ThrowMarker from "@components/music/pick/ThrowMarker";
 
 const MusicPickDetailPage = () => {
   const resetOptionModal = useResetRecoilState(optionModalState);
@@ -48,6 +49,7 @@ const MusicPickDetailPage = () => {
         <>
           <MusicPickDetailTop musicInfo={musicInfo} />
           <MusicPickDetailBottom musicInfo={musicInfo} />
+          {/* <ThrowMarker /> */}
         </>
       ) : (
         <Loading />
