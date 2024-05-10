@@ -22,15 +22,15 @@ import java.util.Set;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
-    /*@Value("${swagger.host}")
-    private String host;*/
+    @Value("${swagger.host}")
+    private String host;
     private String version = "V1";
     private String title = "Throwng MUSIC API " + version;
 
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                //.host(host)
+                .host(host)
                 .consumes(getConsumeContentTypes())
                 .produces(getProduceContentTypes())
                 .apiInfo(apiInfo())
