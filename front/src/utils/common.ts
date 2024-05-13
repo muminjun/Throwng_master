@@ -6,7 +6,13 @@ async function refreshToken() {
   try {
     const response = await axios.post(
       `${BASE_URL}/api/users/auth/refresh`,
-      null
+      undefined,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      }
     );
     console.log(response);
     const { accessToken } = response.data;
@@ -35,12 +41,16 @@ const axiosApi = () => {
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
+      console.log(originalRequest.url);
       if (
-        error.response.data.code === "User_400_4" &&
-        !originalRequest._retry
+        error.response.data.code === "User_400_4"
+        // originalRequest.url !== "/users/auth/refresh"
+        // !originalRequest._retry
       ) {
-        originalRequest._retry = true;
+        // originalRequest._retry = true;
+        // console.log(originalRequest);
         try {
+          console.log(11);
           const newToken = await refreshToken();
           console.log(newToken);
           if (newToken) {
@@ -49,12 +59,13 @@ const axiosApi = () => {
             return axios(originalRequest);
           }
         } catch (error) {
+          console.log("너 에러야 임마");
           console.log(error);
-          // return "Promise.reject(error)";
-          throw "logout";
+          // return Promise.reject(error);
+          return Promise.reject("logout");
         }
       }
-      throw error;
+      return Promise.reject(error);
     }
   );
 
