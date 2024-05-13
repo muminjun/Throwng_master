@@ -50,7 +50,7 @@ const axiosApi = () => {
         // originalRequest._retry = true;
         // console.log(originalRequest);
         try {
-          console.log(11);
+          console.log("테스트요");
           const newToken = await refreshToken();
           console.log(newToken);
           if (newToken) {
