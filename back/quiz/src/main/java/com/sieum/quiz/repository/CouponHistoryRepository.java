@@ -6,4 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CouponHistoryRepository extends JpaRepository<CouponHistory, Long> {
 
     CouponHistory findTopByCouponIdOrderByCreatedAtDesc(final long CouponId);
+
+    CouponHistory findTopByCouponIdAndCouponStatusNotOrderByCreatedAtDesc(
+            final long CouponId, final String couponStatus);
 }

@@ -42,6 +42,7 @@ public class CouponService {
     private final String COMPLETION_STATUS = "COMPLETION";
     private final String WIDE_TYPE = "radius";
     private final String THROWNG_TYPE = "THROWNG";
+    private final String RETURN_STATUS = "COMPLETION";
 
     public CreateCouponResponse createCoupon(final long userId, final String route) {
         final String couponRoute = CouponRoute.findByName(route);
@@ -94,8 +95,8 @@ public class CouponService {
                                 CouponeInquiryResponse.of(
                                         coupon,
                                         couponHistoryRepository
-                                                .findTopByCouponIdOrderByCreatedAtDesc(
-                                                        coupon.getId())))
+                                                .findTopByCouponIdAndCouponStatusNotOrderByCreatedAtDesc(
+                                                        coupon.getId(), RETURN_STATUS)))
                 .collect(Collectors.toList());
     }
 
