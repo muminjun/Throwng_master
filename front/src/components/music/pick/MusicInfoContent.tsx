@@ -43,6 +43,8 @@ const MusicInfoContent = () => {
       <div className="music-cover">
         <img
           src={itemImage || albumImage}
+          loading="lazy"
+          decoding="async"
           onError={(e) => {
             e.currentTarget.src = albumImage;
           }}
