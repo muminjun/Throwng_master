@@ -55,7 +55,11 @@ const MapSwiper = () => {
                     navigate(`/music/pick/${marker.itemId}`);
                   }}
                 >
-                  <img src={marker.albumImage} loading="lazy" />
+                  <img
+                    src={marker.albumImage}
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <div className="content">
                     <div className="title">{marker.songTitle}</div>
                     <div className="singer">{marker.artistName}</div>
@@ -71,7 +75,11 @@ const MapSwiper = () => {
                     navigate(`/music/pick/${marker.itemId}`);
                   }}
                 >
-                  <img src={marker.albumImage} loading="lazy" />
+                  <img
+                    src={marker.albumImage}
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <div className="content">
                     <div className="title">{marker.songTitle}</div>
                     <div className="singer">{marker.artistName}</div>
