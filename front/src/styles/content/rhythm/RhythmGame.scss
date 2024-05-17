@@ -14,7 +14,7 @@
   justify-content: center;
   width: 100%;
   height: 93vh;
-  background-image: url("../../assets/images/background.webp");
+  background-image: url("../../../assets/images/background.webp");
   background-size: cover;
   color: #fff;
   .gameHeader {
@@ -22,6 +22,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .gameStart {
+      margin-top: 3dvh;
+    }
   }
 
   .gameBoard {
@@ -283,6 +286,7 @@
     button {
       display: flex;
       align-items: center;
+      justify-content: center;
       height: 4dvh;
       padding: 2dvh;
       border-radius: 1dvh;
