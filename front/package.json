@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "ts-node server.ts",
     "dev": "dotenv -e ./throwng_front_submodule/.env -e ./throwng_front_submodule/.env.dev vite",
     "prod": "dotenv -e ./throwng_front_submodule/.env -e ./throwng_front_submodule/.env.prod vite",
     "build": "tsc && dotenv -e ./throwng_front_submodule/.env -e ./throwng_front_submodule/.env.prod vite build",
@@ -22,6 +22,7 @@
     "@sentry/tracing": "^7.114.0",
     "@sentry/vite-plugin": "^2.16.1",
     "@types/express": "^4.17.21",
+    "@types/node": "^20.12.12",
     "@types/react-lottie": "^1.2.10",
     "axios": "^1.6.8",
     "browser-image-compression": "^2.0.2",
@@ -45,7 +46,8 @@
     "sass": "^1.75.0",
     "serve": "^14.2.3",
     "styled-components": "^6.1.11",
-    "swiper": "^11.1.1"
+    "swiper": "^11.1.1",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/event-source-polyfill": "^1.0.5",
