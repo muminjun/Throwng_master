@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs";
 
 const app = express();
-const port = 5000; // 원하는 포트를 설정하세요.
+const port = 3000; // 원하는 포트를 설정하세요.
 
 // gzip 파일을 서빙하기 위한 미들웨어
 app.get("*.js", (req, res, next) => {
@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 // 모든 요청을 dist/index.html로 리다이렉트
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
+  console.log(req);
 });
 
 app.listen(port, () => {

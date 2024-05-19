@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "node dist/server.js",
     "dev": "dotenv -e ./throwng_front_submodule/.env -e ./throwng_front_submodule/.env.dev vite",
     "prod": "dotenv -e ./throwng_front_submodule/.env -e ./throwng_front_submodule/.env.prod vite",
     "build": "tsc && dotenv -e ./throwng_front_submodule/.env -e ./throwng_front_submodule/.env.prod vite build",
