@@ -14,6 +14,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "@styles/map/MapSwiper.scss";
+import SwiperItem from "./SwiperItem";
 
 const MapSwiper = () => {
   const insideRadiusMarker = useRecoilValue(insideRadiusMarkerState);
@@ -55,15 +56,7 @@ const MapSwiper = () => {
                     navigate(`/music/pick/${marker.itemId}`);
                   }}
                 >
-                  <img
-                    src={marker.albumImage}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="content">
-                    <div className="title">{marker.songTitle}</div>
-                    <div className="singer">{marker.artistName}</div>
-                  </div>
+                  <SwiperItem marker={marker} />
                 </SwiperSlide>
               );
             })
@@ -75,15 +68,7 @@ const MapSwiper = () => {
                     navigate(`/music/pick/${marker.itemId}`);
                   }}
                 >
-                  <img
-                    src={marker.albumImage}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="content">
-                    <div className="title">{marker.songTitle}</div>
-                    <div className="singer">{marker.artistName}</div>
-                  </div>
+                  <SwiperItem marker={marker} />
                 </SwiperSlide>
               );
             })}

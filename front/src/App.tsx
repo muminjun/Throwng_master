@@ -2,6 +2,7 @@ import { RouterProvider } from "react-router-dom";
 import router from "./routes/router";
 import { Suspense } from "react";
 import { RecoilRoot } from "recoil";
+import * as Sentry from "@sentry/react";
 
 function App() {
   const url = window.location.pathname;
@@ -12,11 +13,12 @@ function App() {
 
   return (
     <RecoilRoot>
-      <Suspense fallback={<div></div>}>
+      <Suspense fallback={null}>
         <RouterProvider router={router} />
       </Suspense>
     </RecoilRoot>
   );
 }
 
-export default App;
+export default Sentry.withProfiler(App);
+// export default App;
